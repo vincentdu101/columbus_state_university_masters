@@ -2,7 +2,7 @@
 #include <iostream>
 using namespace std;
 
-enum Transaction_Type{deposit, withdraw, nonaction};
+enum Transaction_Type{deposit, withdraw, balance, quit};
 enum Account_Type{checking, savings, cd, none};
 int transaction;
 int account;
@@ -14,18 +14,19 @@ int cdTotal = 15000;
 void getTransactionType() {
 	cout << "Enter Transaction Type\n";
 	cout << "Select from the following options:\n";
-	cout << "1 - Deposit\n";
-	cout << "2 - Withdraw\n";
-	cout << "4 - Quit\n";
+	cout << "0 - Deposit\n";
+	cout << "1 - Withdraw\n";
+	cout << "2 - Print Balance\n";
+	cout << "3 - Exit\n";
 	cin >> transaction;
 }
 
 void getAccountType() {
 	cout << "Enter account type\n";
 	cout << "Select from the following options\n";
-	cout << "1 - Checking\n";
-	cout << "2 - Saving\n";
-	cout << "3 - CD\n";
+	cout << "0 - Checking\n";
+	cout << "1 - Saving\n";
+	cout << "2 - CD\n";
 	cin >> account;
 }
 
@@ -35,10 +36,10 @@ void getAmount() {
 }
 
 void printBalance() {
-	cout << "Ending Balance after Transaction" << endl;
+	cout << "\nEnding Balance after Transaction" << endl;
 	cout << "Checking: " << checkingTotal << endl;
 	cout << "Savings: " << savingsTotal << endl;
-	cout << "CD: " << cdTotal << endl;
+	cout << "CD: " << cdTotal << "\n" << endl;
 }
 
 void processDeposit() {
@@ -56,10 +57,20 @@ void processDeposit() {
 void processWithdraw() {
 	if (account == Account_Type::checking) {
 		checkingTotal = checkingTotal - amount;
+
+		if (checkingTotal < 0) {
+			cout << "You cannot withdraw more than what is in your account." << endl;
+			checkingTotal = checkingTotal + amount;
+		}
 	} else if (account == Account_Type::savings) {
 		savingsTotal = savingsTotal - amount;
+
+		if (savingsTotal < 0) {
+			cout << "You cannot withdraw more than what is in your account." << endl;
+			savingsTotal = savingsTotal + amount;
+		}
 	} else if (account == Account_Type::cd) {
-		cout << "CD will face penalty if withdrawn.\n";
+		cout << "CD cannot be withdrawn until deadline.\n";
 	} else {
 		cout << "Error account entered.\n";
 	}
@@ -76,16 +87,17 @@ void processTransaction() {
 		getAmount();
 		processWithdraw();
 		printBalance();
-	} else if (transaction != 4) {
-		cout << "Error transaction entered.\n";
+	} else if (transaction == Transaction_Type::balance) {
+		printBalance();
+	} else if (transaction != Transaction_Type::quit) {
+		cout << "Error transaction entered.\n" << endl;
 	}
 }
 
 int main() {
-	while (transaction != 4) {
+	while (transaction != Transaction_Type::quit) {
 		getTransactionType();
 		processTransaction();
 	}
-
 	return 0;
 }
