@@ -1,8 +1,13 @@
-if ((k == 1) || (k == 2)):
+k = 0
+j = 0
+
+if ((k == 1) or (k == 2)):
     j = 2 * k - 1
-else if ((k == 3) || (k == 5)):
+elif ((k == 3) or (k == 5)):
     j = 3 * k + 1
-else if (k == 4):
+elif (k == 4):
     j = 4 * k - 1
-else if ((k == 6) || (k == 7) || (k == 8)):
+elif ((k == 6) or (k == 7) or (k == 8)):
     j = k - 2
+
+print("js is " + str(j))
