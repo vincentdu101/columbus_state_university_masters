@@ -10,6 +10,7 @@ public class ReaderWriter {
         WAIT, READY
     };
     private static boolean transactionCompleted = false;
+    private static boolean substractionStarted = false;
     private static ReadState state;
 
     public static void main(String[] args) {
@@ -17,9 +18,12 @@ public class ReaderWriter {
         System.out.println("Transaction sequence started for total, now " + total);
         processTaskAddition();
 
-        while (!transactionCompleted) {
-            System.out.println("Transaction sequence not finished yet for addition, now " + total);
-            processTaskSubtraction();
+        while (transactionCompleted != true) {
+            System.out.println(transactionCompleted);
+            if (substractionStarted != true) {
+                System.out.println("Transaction sequence not finished yet for addition, now " + total);
+                processTaskSubtraction();
+            }
         }
     }
 
@@ -45,6 +49,7 @@ public class ReaderWriter {
     public static void processTaskSubtraction() {
         handleStateEvent(delay, new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
+                substractionStarted = true;
                 total -= 10;
                 state = ReadState.READY;
                 transactionCompleted = true;
