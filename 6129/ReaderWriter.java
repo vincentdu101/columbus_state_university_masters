@@ -40,13 +40,14 @@ public class ReaderWriter {
     }
 
     public static void processTaskAddition() {
-        System.out.println("Addition sequence executed for buffer, now buffer has value " + value);
+        System.out.println("Addition sequence started for buffer, now trying to add to buffer value " + value);
         state = ReadState.WAIT;
         additionTimer = new Timer(delay + 2000, new ActionListener() {
             public void actionPerformed(ActionEvent evt) {
                 buffer.add(value);
                 state = ReadState.READY;
                 System.out.println("Addition sequence completed, buffer ready to be released");
+                System.out.println("buffer has " + buffer.size() + " item");
                 additionTimer.stop();
             }
         });
@@ -56,7 +57,7 @@ public class ReaderWriter {
     public static void processTaskSubtraction() {
         if (state == ReadState.READY) {
             substractionStarted = true;
-            System.out.println("Subtraction sequence processing for buffer, attempting to remove " + buffer.get(0));
+            System.out.println("Subtraction sequence starting for buffer, attempting to remove " + buffer.get(0));
             state = ReadState.WAIT;
             subtractionTimer = new Timer(delay, new ActionListener() {
                 public void actionPerformed(ActionEvent evt) {
