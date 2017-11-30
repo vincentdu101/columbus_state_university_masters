@@ -13,12 +13,14 @@ void passByValueResult(int &copy) {
 
 int main() {
 	int y = 1;
+	printf("y is %i\n", y);
 	passByReference(y);
-	printf("y = %i\n", y);
+	printf("after pass by reference y = %i\n", y);
 
 	int z = 1;
+	printf("z is %i\n", z);
 	passByValueResult(z);
-	printf("z = %i\n", z);
+	printf("after pass by value-result z = %i\n", z);
 
 	return -1;
 }

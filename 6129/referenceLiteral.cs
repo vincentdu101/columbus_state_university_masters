@@ -8,8 +8,9 @@ class ReferenceLiteral {
 
 	static void Main() {
 		int val = 1;
+		Console.WriteLine("val is originally " + val);
 		Literal(ref val);
-		Console.WriteLine(val);
+		Console.WriteLine("val is now " + val + " after being updated via pass by reference");
 	}
 
 }
